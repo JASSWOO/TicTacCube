@@ -1,8 +1,13 @@
 package com.jaswoo.ticTacCube
 
+import org.bukkit.entity.Player
 import java.util.UUID
 
-class game (var player1:UUID, var player2: UUID){
+class game (private var player1:Player, private var player2: Player){
+
+    var player1Gui = gameGui(player1)
+    var player2Gui = gameGui(player2)
+
     var board = arrayOf(arrayOf(0,0,0),arrayOf(0,0,0),arrayOf(0,0,0));
     var turn = player1
     var winner = null
@@ -11,10 +16,10 @@ class game (var player1:UUID, var player2: UUID){
             move(turn)
         }while (true)
     }
-    fun winCheck(){
+    private fun winCheck(){
 
     }
-    fun move(player:UUID){
+    private fun move(player:Player){
 
 
 

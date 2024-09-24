@@ -17,9 +17,14 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        url 'https://repo.xenondevs.xyz/releases'
+    }
 }
 
 dependencies {
+    implementation "xyz.xenondevs.invui:invui:1.37"
+    implementation "xyz.xenondevs.invui:invui-kotlin:1.37"
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
     implementation "net.kyori:adventure-text-minimessage:4.14.0"
