@@ -1,6 +1,8 @@
 package com.jaswoo.ticTacCube
 
 import com.jaswoo.ticTacCube.commands.Play
+import com.jaswoo.ticTacCube.listeners.invCloseListener
+import com.jaswoo.ticTacCube.listeners.playerQuitListener
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -11,6 +13,7 @@ class TicTacCube : JavaPlugin() {
         var waitingPlayer :Player? = null
         var joiningPlayer : Player? = null
         var games: MutableList<Game> = ArrayList()
+
         fun newGame(player: Player){
             joiningPlayer = player
             games += Game(games.size,(waitingPlayer as Player),(joiningPlayer as Player))
@@ -37,6 +40,9 @@ class TicTacCube : JavaPlugin() {
 
     override fun onEnable() {
         this.getCommand("play")?.setExecutor(Play())
+
+        server.pluginManager.registerEvents(invCloseListener(),this)
+        server.pluginManager.registerEvents(playerQuitListener(),this)
 
         // Plugin startup logic
     }

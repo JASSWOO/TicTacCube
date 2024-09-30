@@ -2,8 +2,12 @@ package com.jaswoo.ticTacCube
 
 import org.bukkit.block.data.type.Switch
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.player.PlayerQuitEvent
+import java.awt.desktop.QuitEvent
 
-class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
+class Game (var gameId:Int,  var player1:Player,  var player2: Player){
     var board = arrayOf(arrayOf(0,0,0),arrayOf(0,0,0),arrayOf(0,0,0))
     var turn = player1
 
@@ -15,6 +19,21 @@ class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
     var winner = null
 
     var moves = 0
+
+//    private fun invAlwaysOpen( event: InventoryCloseEvent) {
+//        if(event.player == player1 || event.player == player2)
+//        event.player.openInventory(event.inventory)
+//    }
+
+    private fun onQuit(event: PlayerQuitEvent){
+        if(event.player == player1 ){
+            TicTacCube.deleteGame(1,this.gameId,player1,player2)
+        }
+        else if(event.player == player2){
+            TicTacCube.deleteGame(2,this.gameId,player1,player2)
+
+        }
+    }
 
     private fun winCheck() : Int{
         for (nums in 0..2){
@@ -37,6 +56,8 @@ class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
         return 0
     }
 
+
+
      fun move(){
         moves += 1
         val win = winCheck()
@@ -55,4 +76,7 @@ class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
          }
 
     }
+
+
+
 }
