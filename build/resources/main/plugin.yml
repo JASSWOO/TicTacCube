@@ -1,8 +1,0 @@
-name: TicTacCube
-version: '1.0-SNAPSHOT'
-main: com.jaswoo.ticTacCube.TicTacCube
-api-version: '1.20'
-commands:
-  play:
-    usage: /play
-    description: "lets you play TicTacCube!"
