@@ -1,6 +1,7 @@
 package com.jaswoo.ticTacCube
 
 import com.jaswoo.ticTacCube.commands.Play
+import com.jaswoo.ticTacCube.listeners.LeaveListener
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -37,7 +38,7 @@ class TicTacCube : JavaPlugin() {
 
     override fun onEnable() {
         this.getCommand("play")?.setExecutor(Play())
-
+        server.pluginManager.registerEvents(LeaveListener(),this)
         // Plugin startup logic
     }
 

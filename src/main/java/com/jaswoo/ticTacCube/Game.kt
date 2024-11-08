@@ -7,12 +7,7 @@ class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
     var board = arrayOf(arrayOf(0,0,0),arrayOf(0,0,0),arrayOf(0,0,0))
     var turn = player1
 
-//    var player1Gui = GameGui(gameId,player1, 1,board,turn)
-//    var player2Gui = GameGui(gameId,player2, 2,board,turn)
-
-    var Gui = GameGui(gameId,player1,player2,board,turn)
-
-    var winner = null
+    var Gui = GameGui(this,player1,player2,board,turn)
 
     var moves = 0
 
@@ -37,6 +32,12 @@ class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
         return 0
     }
 
+    fun endGame(win:Int){
+        TicTacCube.deleteGame(win,gameId,player1,player2)
+        Gui.window1.close();
+        Gui.window2.close();
+    }
+
      fun move(){
         moves += 1
         val win = winCheck()
@@ -47,9 +48,7 @@ class Game (private var gameId:Int,  var player1:Player,  var player2: Player){
                  turn = player1
              }
          } else{
-             TicTacCube.deleteGame(win,gameId,player1,player2)
-             Gui.window1.close();
-             Gui.window2.close();
+             endGame(win)
 
              return
          }
