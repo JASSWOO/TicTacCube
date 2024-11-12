@@ -1,0 +1,202 @@
+Index: src/main/java/com/jaswoo/ticTacCube/GameGui.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.jaswoo.ticTacCube\r\n\r\nimport com.jaswoo.ticTacCube.guiElements.ButtonItem\r\nimport com.jaswoo.ticTacCube.guiElements.Head\r\nimport com.jaswoo.ticTacCube.guiElements.Leave\r\nimport org.bukkit.Material\r\nimport org.bukkit.entity.Player\r\nimport xyz.xenondevs.invui.gui.Gui\r\nimport xyz.xenondevs.invui.item.builder.ItemBuilder\r\nimport xyz.xenondevs.invui.item.impl.SimpleItem\r\nimport xyz.xenondevs.invui.window.Window\r\n\r\n\r\nclass GameGui(gameId:Int,player1: Player,player2: Player,board:Array<Array<Int>>, turn:Player) {\r\n\r\n\r\n    private val gui = Gui.normal() // Creates the GuiBuilder for a normal GUI\r\n        .setStructure(\r\n            \"# # # # # # # # #\",\r\n            \"# # # 0 1 2 # # #\",\r\n            \"# < # 3 4 5 # > #\",\r\n            \"# # # 6 7 8 # # #\",\r\n            \"# # # # # # # # #\",\r\n            \"# # # # X # # # #\")\r\n        .addIngredient('#', SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)))\r\n        .addIngredient('0', ButtonItem(gameId,0,board,turn))\r\n        .addIngredient('1', ButtonItem(gameId,1,board,turn))\r\n        .addIngredient('2', ButtonItem(gameId,2,board,turn))\r\n        .addIngredient('3', ButtonItem(gameId,3,board,turn))\r\n        .addIngredient('4', ButtonItem(gameId,4,board,turn))\r\n        .addIngredient('5', ButtonItem(gameId,5,board,turn))\r\n        .addIngredient('6', ButtonItem(gameId,6,board,turn))\r\n        .addIngredient('7', ButtonItem(gameId,7,board,turn))\r\n        .addIngredient('8', ButtonItem(gameId,8,board,turn))\r\n        .addIngredient('<', Head(player1))\r\n        .addIngredient('>', Head(player2))\r\n        .addIngredient('X', Leave())\r\n        .build()\r\n\r\n    val window1 = Window.single()\r\n        .setViewer(player1)\r\n        .setTitle(\"TicTacCube\")\r\n        .setGui(gui)\r\n        .build()\r\n\r\n    val window2 = Window.single()\r\n        .setViewer(player2)\r\n        .setTitle(\"TicTacCube\")\r\n        .setGui(gui)\r\n        .build()\r\n\r\n        init {\r\n            window1.open()\r\n            window2.open()\r\n        }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/jaswoo/ticTacCube/GameGui.kt b/src/main/java/com/jaswoo/ticTacCube/GameGui.kt
+--- a/src/main/java/com/jaswoo/ticTacCube/GameGui.kt	(revision 37502d0577ba5a1554908b5d059e29d291cca6c2)
++++ b/src/main/java/com/jaswoo/ticTacCube/GameGui.kt	(date 1730885259121)
+@@ -11,7 +11,7 @@
+ import xyz.xenondevs.invui.window.Window
+ 
+ 
+-class GameGui(gameId:Int,player1: Player,player2: Player,board:Array<Array<Int>>, turn:Player) {
++class GameGui(var game: Game,player1: Player,player2: Player,board:Array<Array<Int>>, turn:Player) {
+ 
+ 
+     private val gui = Gui.normal() // Creates the GuiBuilder for a normal GUI
+@@ -23,18 +23,18 @@
+             "# # # # # # # # #",
+             "# # # # X # # # #")
+         .addIngredient('#', SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)))
+-        .addIngredient('0', ButtonItem(gameId,0,board,turn))
+-        .addIngredient('1', ButtonItem(gameId,1,board,turn))
+-        .addIngredient('2', ButtonItem(gameId,2,board,turn))
+-        .addIngredient('3', ButtonItem(gameId,3,board,turn))
+-        .addIngredient('4', ButtonItem(gameId,4,board,turn))
+-        .addIngredient('5', ButtonItem(gameId,5,board,turn))
+-        .addIngredient('6', ButtonItem(gameId,6,board,turn))
+-        .addIngredient('7', ButtonItem(gameId,7,board,turn))
+-        .addIngredient('8', ButtonItem(gameId,8,board,turn))
++        .addIngredient('0', ButtonItem(game,0,board,turn))
++        .addIngredient('1', ButtonItem(game,1,board,turn))
++        .addIngredient('2', ButtonItem(game,2,board,turn))
++        .addIngredient('3', ButtonItem(game,3,board,turn))
++        .addIngredient('4', ButtonItem(game,4,board,turn))
++        .addIngredient('5', ButtonItem(game,5,board,turn))
++        .addIngredient('6', ButtonItem(game,6,board,turn))
++        .addIngredient('7', ButtonItem(game,7,board,turn))
++        .addIngredient('8', ButtonItem(game,8,board,turn))
+         .addIngredient('<', Head(player1))
+         .addIngredient('>', Head(player2))
+-        .addIngredient('X', Leave())
++        .addIngredient('X', Leave(game))
+         .build()
+ 
+     val window1 = Window.single()
+Index: src/main/java/com/jaswoo/ticTacCube/listeners/LeaveListener.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/jaswoo/ticTacCube/listeners/LeaveListener.kt b/src/main/java/com/jaswoo/ticTacCube/listeners/LeaveListener.kt
+new file mode 100644
+--- /dev/null	(date 1730886069521)
++++ b/src/main/java/com/jaswoo/ticTacCube/listeners/LeaveListener.kt	(date 1730886069521)
+@@ -0,0 +1,11 @@
++package com.jaswoo.ticTacCube.listeners
++
++import org.bukkit.event.EventHandler
++import org.bukkit.event.Listener
++import org.bukkit.event.player.PlayerQuitEvent
++
++class LeaveListener : Listener {
++    @EventHandler
++    fun leaveListener(event: PlayerQuitEvent) {
++    }
++}
+\ No newline at end of file
+Index: src/main/java/com/jaswoo/ticTacCube/guiElements/ButtonItem.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.jaswoo.ticTacCube.guiElements\r\n\r\nimport com.jaswoo.ticTacCube.TicTacCube\r\nimport org.bukkit.Material\r\nimport org.bukkit.entity.Player\r\nimport org.bukkit.event.inventory.ClickType\r\nimport org.bukkit.event.inventory.InventoryClickEvent\r\nimport xyz.xenondevs.invui.item.ItemProvider\r\nimport xyz.xenondevs.invui.item.builder.ItemBuilder\r\nimport xyz.xenondevs.invui.item.impl.AbstractItem\r\n\r\nclass ButtonItem(var gameId:Int,private var id:Int,var board:Array<Array<Int>>,var turn:Player) : AbstractItem() {\r\n\r\n    private var type = 0\r\n\r\n    override fun getItemProvider(): ItemProvider {\r\n        return if(type == 1){\r\n            ItemBuilder(Material.DIAMOND).setDisplayName(\"O\")\r\n        } else if(type == 2){\r\n            ItemBuilder(Material.DIAMOND_SWORD).setDisplayName(\"X\")\r\n        } else{\r\n            ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setDisplayName(\"Empty\")\r\n        }\r\n    }\r\n\r\n    override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {\r\n\r\n        if(clickType.isLeftClick){\r\n            turn = TicTacCube.games[this.gameId].turn\r\n\r\n            if(type != 0) return\r\n            if(turn != player) return\r\n            if(TicTacCube.games[this.gameId].player1 == player){\r\n                this.type = 1\r\n            } else{\r\n                this.type = 2\r\n            }\r\n\r\n            board[id/3][id%3] = type\r\n\r\n            TicTacCube.games[this.gameId].move()\r\n            notifyWindows()\r\n        }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/jaswoo/ticTacCube/guiElements/ButtonItem.kt b/src/main/java/com/jaswoo/ticTacCube/guiElements/ButtonItem.kt
+--- a/src/main/java/com/jaswoo/ticTacCube/guiElements/ButtonItem.kt	(revision 37502d0577ba5a1554908b5d059e29d291cca6c2)
++++ b/src/main/java/com/jaswoo/ticTacCube/guiElements/ButtonItem.kt	(date 1730884699635)
+@@ -1,5 +1,6 @@
+ package com.jaswoo.ticTacCube.guiElements
+ 
++import com.jaswoo.ticTacCube.Game
+ import com.jaswoo.ticTacCube.TicTacCube
+ import org.bukkit.Material
+ import org.bukkit.entity.Player
+@@ -9,7 +10,7 @@
+ import xyz.xenondevs.invui.item.builder.ItemBuilder
+ import xyz.xenondevs.invui.item.impl.AbstractItem
+ 
+-class ButtonItem(var gameId:Int,private var id:Int,var board:Array<Array<Int>>,var turn:Player) : AbstractItem() {
++class ButtonItem(var game:Game,private var id:Int,var board:Array<Array<Int>>,var turn:Player) : AbstractItem() {
+ 
+     private var type = 0
+ 
+@@ -26,11 +27,11 @@
+     override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
+ 
+         if(clickType.isLeftClick){
+-            turn = TicTacCube.games[this.gameId].turn
++            turn = game.turn
+ 
+             if(type != 0) return
+             if(turn != player) return
+-            if(TicTacCube.games[this.gameId].player1 == player){
++            if(game.player1 == player){
+                 this.type = 1
+             } else{
+                 this.type = 2
+@@ -38,7 +39,7 @@
+ 
+             board[id/3][id%3] = type
+ 
+-            TicTacCube.games[this.gameId].move()
++            game.move()
+             notifyWindows()
+         }
+ 
+Index: src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.jaswoo.ticTacCube.guiElements\r\n\r\nimport org.bukkit.Material\r\nimport org.bukkit.entity.Player\r\nimport org.bukkit.event.inventory.ClickType\r\nimport org.bukkit.event.inventory.InventoryClickEvent\r\nimport xyz.xenondevs.invui.item.ItemProvider\r\nimport xyz.xenondevs.invui.item.builder.ItemBuilder\r\nimport xyz.xenondevs.invui.item.impl.AbstractItem\r\n\r\nclass Leave() : AbstractItem() {\r\n    override fun getItemProvider(): ItemProvider {\r\n        return ItemBuilder(Material.BARRIER)\r\n    }\r\n\r\n    override fun handleClick(p0: ClickType, p1: Player, p2: InventoryClickEvent) {\r\n        TODO(\"Not yet implemented\")\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt b/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt
+--- a/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt	(revision 37502d0577ba5a1554908b5d059e29d291cca6c2)
++++ b/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt	(date 1730885700146)
+@@ -1,5 +1,6 @@
+ package com.jaswoo.ticTacCube.guiElements
+ 
++import com.jaswoo.ticTacCube.Game
+ import org.bukkit.Material
+ import org.bukkit.entity.Player
+ import org.bukkit.event.inventory.ClickType
+@@ -8,12 +9,19 @@
+ import xyz.xenondevs.invui.item.builder.ItemBuilder
+ import xyz.xenondevs.invui.item.impl.AbstractItem
+ 
+-class Leave() : AbstractItem() {
++class Leave(var game: Game) : AbstractItem() {
+     override fun getItemProvider(): ItemProvider {
+         return ItemBuilder(Material.BARRIER)
+     }
+ 
+     override fun handleClick(p0: ClickType, p1: Player, p2: InventoryClickEvent) {
+-        TODO("Not yet implemented")
++        var winningPlayer = 0
++        if(game.player1 == p1)
++            { winningPlayer = 2}
++        else {
++            winningPlayer = 1
++        }
++
++        game.endGame(winningPlayer)
+     }
+ }
+\ No newline at end of file
+Index: src/main/java/com/jaswoo/ticTacCube/Game.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.jaswoo.ticTacCube\r\n\r\nimport org.bukkit.block.data.type.Switch\r\nimport org.bukkit.entity.Player\r\n\r\nclass Game (private var gameId:Int,  var player1:Player,  var player2: Player){\r\n    var board = arrayOf(arrayOf(0,0,0),arrayOf(0,0,0),arrayOf(0,0,0))\r\n    var turn = player1\r\n\r\n    var Gui = GameGui(gameId,player1,player2,board,turn)\r\n\r\n    var moves = 0\r\n\r\n    private fun winCheck() : Int{\r\n        for (nums in 0..2){\r\n            if(board[1][nums] == board[2][nums] && board[2][nums] == board[0][nums] && board[1][nums] != 0){\r\n                return board[1][nums];\r\n            }\r\n            if(board[nums][1] == board[nums][2] && board[nums][2] == board[nums][0] && board[nums][1] != 0){\r\n                return board[1][nums];\r\n            }\r\n        }\r\n        if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[1][1] != 0){\r\n            return board[0][0]\r\n        }\r\n        if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[1][1] != 0){\r\n            return board[0][2]\r\n        }\r\n        if(moves == 9){\r\n            return 3\r\n        }\r\n        return 0\r\n    }\r\n\r\n     fun move(){\r\n        moves += 1\r\n        val win = winCheck()\r\n         if(win == 0){\r\n             if(turn == player1){\r\n                 turn = player2\r\n             } else{\r\n                 turn = player1\r\n             }\r\n         } else{\r\n             TicTacCube.deleteGame(win,gameId,player1,player2)\r\n             Gui.window1.close();\r\n             Gui.window2.close();\r\n\r\n             return\r\n         }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/jaswoo/ticTacCube/Game.kt b/src/main/java/com/jaswoo/ticTacCube/Game.kt
+--- a/src/main/java/com/jaswoo/ticTacCube/Game.kt	(revision 37502d0577ba5a1554908b5d059e29d291cca6c2)
++++ b/src/main/java/com/jaswoo/ticTacCube/Game.kt	(date 1730886139614)
+@@ -7,7 +7,7 @@
+     var board = arrayOf(arrayOf(0,0,0),arrayOf(0,0,0),arrayOf(0,0,0))
+     var turn = player1
+ 
+-    var Gui = GameGui(gameId,player1,player2,board,turn)
++    var Gui = GameGui(this,player1,player2,board,turn)
+ 
+     var moves = 0
+ 
+@@ -32,6 +32,12 @@
+         return 0
+     }
+ 
++    fun endGame(win:Int){
++        TicTacCube.deleteGame(win,gameId,player1,player2)
++        Gui.window1.close();
++        Gui.window2.close();
++    }
++
+      fun move(){
+         moves += 1
+         val win = winCheck()
+@@ -42,9 +48,7 @@
+                  turn = player1
+              }
+          } else{
+-             TicTacCube.deleteGame(win,gameId,player1,player2)
+-             Gui.window1.close();
+-             Gui.window2.close();
++             endGame(win)
+ 
+              return
+          }

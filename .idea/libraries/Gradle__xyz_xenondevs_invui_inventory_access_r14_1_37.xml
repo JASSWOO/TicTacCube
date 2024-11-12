@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: xyz.xenondevs.invui:inventory-access-r14:1.37" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="xyz.xenondevs.invui" artifactId="inventory-access-r14" version="1.37" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/xyz.xenondevs.invui/inventory-access-r14/1.37/4f84405458ec6ccc9cefa93914d80291cfcc34d/inventory-access-r14-1.37.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

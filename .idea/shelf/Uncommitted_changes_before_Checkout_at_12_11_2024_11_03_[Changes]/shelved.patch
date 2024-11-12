@@ -1,0 +1,38 @@
+Index: src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.jaswoo.ticTacCube.guiElements\r\n\r\nimport org.bukkit.Material\r\nimport org.bukkit.entity.Player\r\nimport org.bukkit.event.inventory.ClickType\r\nimport org.bukkit.event.inventory.InventoryClickEvent\r\nimport xyz.xenondevs.invui.item.ItemProvider\r\nimport xyz.xenondevs.invui.item.builder.ItemBuilder\r\nimport xyz.xenondevs.invui.item.impl.AbstractItem\r\n\r\nclass Leave() : AbstractItem() {\r\n    override fun getItemProvider(): ItemProvider {\r\n        return ItemBuilder(Material.BARRIER)\r\n    }\r\n\r\n    override fun handleClick(p0: ClickType, p1: Player, p2: InventoryClickEvent) {\r\n        TODO(\"Not yet implemented\")\r\n    }\r\n}
+===================================================================
+diff --git a/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt b/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt
+--- a/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt	(revision 2fd18606c531f7edd0cce8daff7e18c547560bd5)
++++ b/src/main/java/com/jaswoo/ticTacCube/guiElements/Leave.kt	(date 1731405810158)
+@@ -1,5 +1,6 @@
+ package com.jaswoo.ticTacCube.guiElements
+ 
++import com.jaswoo.ticTacCube.Game
+ import org.bukkit.Material
+ import org.bukkit.entity.Player
+ import org.bukkit.event.inventory.ClickType
+@@ -8,12 +9,19 @@
+ import xyz.xenondevs.invui.item.builder.ItemBuilder
+ import xyz.xenondevs.invui.item.impl.AbstractItem
+ 
+-class Leave() : AbstractItem() {
++class Leave(var game: Game) : AbstractItem() {
+     override fun getItemProvider(): ItemProvider {
+         return ItemBuilder(Material.BARRIER)
+     }
+ 
+     override fun handleClick(p0: ClickType, p1: Player, p2: InventoryClickEvent) {
+-        TODO("Not yet implemented")
++        var winningPlayer = 0
++        if(game.player1 == p1)
++            { winningPlayer = 2}
++        else {
++            winningPlayer = 1
++        }
++
++        game.endGame(winningPlayer)
+     }
+ }
+\ No newline at end of file
