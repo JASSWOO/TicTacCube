@@ -42,12 +42,15 @@ class GameGui(var game: Game,player1: Player,player2: Player,board:Array<Array<I
         .setViewer(player1)
         .setTitle("TicTacCube")
         .setGui(gui)
+        .setCloseable(false)
         .build()
 
     val window2 = Window.single()
         .setViewer(player2)
         .setTitle("TicTacCube")
         .setGui(gui)
+        .setCloseable(false)
+
         .build()
 
         init {

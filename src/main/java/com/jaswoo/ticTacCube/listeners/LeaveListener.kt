@@ -9,12 +9,16 @@ import org.bukkit.event.player.PlayerQuitEvent
 class LeaveListener : Listener {
     @EventHandler
     fun leaveListener(event: PlayerQuitEvent) {
-        Bukkit.broadcastMessage(event.player.toString()+ "left")
-        TicTacCube.games.forEach { if(it.player1 == event.player){
-            it.endGame(2);
-        }else if(it.player2 == event.player){
-            it.endGame(1);
-        }
+        TicTacCube.games.forEach {
+            if (it.player1 == event.player) {
+                it.endGame(2);
+                return;
+
+            } else if (it.player2 == event.player) {
+                it.endGame(1);
+                return;
+
+            }
         }
     }
 }

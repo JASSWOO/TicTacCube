@@ -14,15 +14,14 @@ import xyz.xenondevs.invui.item.impl.AbstractItem
 
 class HeadItem(val player: Player) : AbstractItem() {
     override fun getItemProvider(): ItemProvider {
-//        return SkullBuilder(player.uniqueId).setDisplayName(player.name)
-        var head = ItemStack(Material.PLAYER_HEAD,1);
-        var headMeta = head.itemMeta
-        headMeta.setOwner()
-        head.setItemMeta()
-
+        return try {
+            SkullBuilder(player.uniqueId).setDisplayName(player.name)
+        } catch (e: Exception) {
+            ItemBuilder(Material.PLAYER_HEAD).setDisplayName(player.name)
+        }
     }
 
     override fun handleClick(p0: ClickType, p1: Player, p2: InventoryClickEvent) {
-        TODO("Not yet implemented")
+        return;
     }
 }
