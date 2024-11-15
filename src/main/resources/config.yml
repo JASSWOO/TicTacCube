@@ -1,0 +1,5 @@
+commandName: "play"
+message:
+  waitingForGame: "%player% is waiting for Tic Tac Cube Game! join him with /play"
+  wonGame: "%player1% defeated %player2% in TicTacCube! Try it yourself with /play"
+  tieGame: "%player1% and %player2% has finished Tit Tac Cube game with a Tie! /play"

@@ -9,6 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin
 class TicTacCube : JavaPlugin() {
 
     companion object CompanionObject{
+        var waitingGameMessage = "Error loading config"
+        var wonGameMessage = "Error loading config"
+        var tieGameMessage = "Error loading config"
         var waitingPlayer :Player? = null
         var joiningPlayer : Player? = null
         var games: MutableList<Game> = ArrayList()
@@ -17,14 +20,16 @@ class TicTacCube : JavaPlugin() {
             games += Game(games.size,(waitingPlayer as Player),(joiningPlayer as Player))
         }
         fun deleteGame(winner: Int, gameId: Int,player1:Player,player2:Player){
+
             if(winner == 3){
-                Bukkit.broadcastMessage("${player1.name}'s and ${player2.name}'s TicTacCube game ended as a tie! /play to play")
+
+                Bukkit.broadcastMessage(tieGameMessage.toString().replace("%player1%",player1.name).replace("%player2%",player2.name))
 
             } else if (winner == 1){
-                Bukkit.broadcastMessage("${player1.name} defeated ${player2.name} in TicTacCube game! /play to play")
+                Bukkit.broadcastMessage(wonGameMessage.toString().replace("%player1%",player1.name).replace("%player2%",player2.name))
 
             } else{
-                Bukkit.broadcastMessage("${player2.name} defeated ${player1.name} in TicTacCube game! /play to play")
+                Bukkit.broadcastMessage(wonGameMessage.toString().replace("%player2%",player1.name).replace("%player1%",player2.name))
 
             }
 
@@ -37,9 +42,16 @@ class TicTacCube : JavaPlugin() {
 
 
     override fun onEnable() {
-        this.getCommand("play")?.setExecutor(Play())
+        saveDefaultConfig()
+
+        TicTacCube.waitingGameMessage = config.getString("message.waitingForGame").toString()
+        TicTacCube.wonGameMessage = config.getString("message.wonGame").toString()
+        TicTacCube.tieGameMessage = config.getString("message.tieGame").toString()
+
+        config.getString("commandName")?.let { this.getCommand(it)?.setExecutor(Play()) }
         server.pluginManager.registerEvents(LeaveListener(),this)
         // Plugin startup logic
+
     }
 
     override fun onDisable() {

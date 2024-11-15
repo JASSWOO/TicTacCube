@@ -1,6 +1,7 @@
 package com.jaswoo.ticTacCube.commands
 
 import com.jaswoo.ticTacCube.TicTacCube
+import com.jaswoo.ticTacCube.TicTacCube.CompanionObject.tieGameMessage
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -12,7 +13,7 @@ class Play() : CommandExecutor {
         if(sender !is Player) return false
 
         if(TicTacCube.waitingPlayer == null){
-            sender.sendMessage("Waiting for another player")
+            Bukkit.broadcastMessage(TicTacCube.waitingGameMessage.toString().replace("%player%",sender.name))
             TicTacCube.waitingPlayer =sender;
 
         } else if(TicTacCube.waitingPlayer != sender){
